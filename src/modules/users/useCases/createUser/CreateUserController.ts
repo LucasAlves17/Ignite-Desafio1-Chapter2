@@ -1,6 +1,6 @@
-import { Response, Request } from "express";
+import { Response, Request } from 'express';
 
-import { CreateUserUseCase } from "./CreateUserUseCase";
+import { CreateUserUseCase } from './CreateUserUseCase';
 
 class CreateUserController {
   constructor(private createUserUseCase: CreateUserUseCase) {}
@@ -8,9 +8,13 @@ class CreateUserController {
   handle(request: Request, response: Response): Response {
     const { name, email } = request.body;
 
-    this.createUserUseCase.execute({ name, email });
+    try {
+      const newUser = this.createUserUseCase.execute({ name, email });
 
-    return response.status(201).send();
+      return response.status(201).send(newUser);
+    } catch (error) {
+      return response.status(500).json({ message: error.message });
+    }
   }
 }
 

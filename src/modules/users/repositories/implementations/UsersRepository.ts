@@ -1,5 +1,5 @@
-import { User } from "../../model/User";
-import { IUsersRepository, ICreateUserDTO } from "../IUsersRepository";
+import { User } from '../../model/User';
+import { IUsersRepository, ICreateUserDTO } from '../IUsersRepository';
 
 class UsersRepository implements IUsersRepository {
   private users: User[];
@@ -24,10 +24,9 @@ class UsersRepository implements IUsersRepository {
     Object.assign(user, {
       name,
       email,
-      admin: false,
       created_at: new Date(),
       updated_at: new Date(),
-    })
+    });
 
     this.users.push(user);
 
@@ -35,12 +34,12 @@ class UsersRepository implements IUsersRepository {
   }
 
   findById(id: string): User | undefined {
-    const user = this.users.find(user => user.id === id);
+    const user = this.users.find((user) => user.id === id);
     return user;
   }
 
   findByEmail(email: string): User | undefined {
-    const user = this.users.find(user => user.email === email);
+    const user = this.users.find((user) => user.email === email);
     return user;
   }
 
@@ -48,7 +47,7 @@ class UsersRepository implements IUsersRepository {
     Object.assign(receivedUser, {
       admin: true,
       updated_at: new Date(),
-    })
+    });
 
     return receivedUser;
   }
