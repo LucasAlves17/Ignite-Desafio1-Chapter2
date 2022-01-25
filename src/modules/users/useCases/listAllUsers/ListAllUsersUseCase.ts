@@ -11,8 +11,22 @@ class ListAllUsersUseCase {
   execute({ user_id }: IRequest): User[] {
     const user = this.usersRepository.findById(user_id);
 
+    if (!user) {
+      const error = {
+        code: '400',
+        message: 'User not found!',
+      };
+
+      throw error;
+    }
+
     if (!user.admin) {
-      throw new Error('User already exists!');
+      const error = {
+        code: '400',
+        message: 'Access denied, the informed user is not admin!',
+      };
+
+      throw error;
     }
 
     return this.usersRepository.list();
